@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fikir Panosu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0e0e0e; --surface: #161616; --card-bg: #1a1a1a; --card-back: #111;
+    --border: #2a2a2a; --accent: #c9a84c; --text: #e8e3d8;
+    --text-dim: #888; --text-muted: #aaa; --danger: #c0392b;
+  }
+  body { font-family: 'DM Mono', monospace; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  /* HEADER */
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2rem 3rem; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: rgba(14,14,14,0.92); backdrop-filter: blur(12px); z-index: 100;
+  }
+  .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent); }
+  .logo span { color: var(--text-dim); font-style: italic; font-size: 0.85rem; display: block; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-top: -2px; }
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+  .card-count { font-size: 0.75rem; color: #bbb; letter-spacing: 0.15em; text-transform: uppercase; }
+  .btn { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.4rem; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; transition: all 0.2s; }
+  .btn:hover { background: var(--accent); color: #000; }
+  .btn-cancel { border-color: var(--border); color: var(--text-muted); }
+  .btn-cancel:hover { background: var(--border); color: var(--text); }
+
+  /* TAG FILTER BAR */
+  .filter-bar {
+    padding: 1rem 3rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    min-height: 56px;
+    background: rgba(14,14,14,0.7);
+  }
+  .filter-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-right: 0.4rem;
+    white-space: nowrap;
+  }
+  .filter-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.18s;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .filter-tag:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-tag.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 500; }
+  .filter-tag.all-tag { border-color: #444; color: #ccc; }
+  .filter-tag.all-tag.active { background: #444; color: var(--text); border-color: #666; }
+  .filter-empty { font-size: 0.65rem; color: #444; letter-spacing: 0.1em; font-style: italic; }
+
+  main { padding: 3rem; max-width: 1600px; margin: 0 auto; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+
+  /* CARD */
+  .card-wrapper { perspective: 1200px; height: 240px; animation: fadeInUp 0.4s ease both; position: relative; }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+  .card-wrapper.flipped .card-inner { transform: rotateY(180deg); }
+  .card-front, .card-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border: 1px solid var(--border); padding: 1.5rem; display: flex; flex-direction: column; }
+  .card-front { background: var(--card-bg); cursor: pointer; }
+  .card-back { background: var(--card-back); transform: rotateY(180deg); overflow: hidden; }
+  .card-front::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); }
+  .card-number { font-size: 0.7rem; color: #aaa; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--text); line-height: 1.4; flex: 1; }
+
+  /* TAGS ON CARD FRONT */
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.6rem;
+  }
+  .card-tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.5rem;
+    border: 1px solid #3a3a3a;
+    color: var(--accent);
+    border-color: rgba(201,168,76,0.35);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .card-tag:hover { background: rgba(201,168,76,0.12); }
+
+  .card-hint { font-size: 0.7rem; color: #aaa; letter-spacing: 0.1em; text-transform: uppercase; display: flex; align-items: center; gap: 0.4rem; margin-top: 0.6rem; }
+  .card-hint::before { content: ''; width: 20px; height: 1px; background: #777; }
+  .card-back-content { font-size: 0.78rem; line-height: 1.7; color: #aaa; flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; cursor: pointer; }
+  .card-back-content::-webkit-scrollbar { width: 3px; }
+  .card-back-content::-webkit-scrollbar-thumb { background: var(--border); }
+  .card-back-label { font-size: 0.6rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+  .card-back-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .card-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
+  .card-actions button { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+  .card-actions button:hover { color: var(--text); border-color: var(--text-dim); }
+  .card-actions .del-btn:hover { color: var(--danger); border-color: var(--danger); }
+
+  /* DRAG HANDLE */
+  .drag-handle { position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3.5px; cursor: grab; opacity: 0; transition: opacity 0.2s; z-index: 20; }
+  .drag-handle:active { cursor: grabbing; }
+  .drag-handle span { display: block; width: 13px; height: 1.5px; background: var(--text-muted); border-radius: 1px; transition: background 0.2s; }
+  .card-wrapper:hover .drag-handle { opacity: 1; }
+  .drag-handle:hover span { background: var(--accent); }
+  .card-wrapper.dragging { opacity: 0.25; transform: scale(0.96); }
+  .card-wrapper.drag-over .card-front, .card-wrapper.drag-over .card-back { border-color: var(--accent); }
+  .card-wrapper.drag-over::after { content: ''; position: absolute; inset: -4px; border: 1px dashed var(--accent); pointer-events: none; z-index: 30; }
+
+  /* ADD BUTTON */
+  .add-card-wrapper { height: 240px; border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.25s; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; gap: 0.5rem; flex-direction: column; }
+  .add-card-wrapper:hover { border-color: var(--accent); color: var(--accent); background: rgba(201,168,76,0.03); }
+  .add-icon { font-size: 2rem; font-weight: 100; line-height: 1; font-family: 'Playfair Display', serif; opacity: 0.6; }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.25s; padding: 1rem; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal { background: var(--surface); border: 1px solid var(--border); width: 100%; max-width: 560px; padding: 2.5rem; transform: translateY(20px); transition: transform 0.3s; position: relative; max-height: 90vh; overflow-y: auto; }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent 60%); }
+  .modal h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text); margin-bottom: 2rem; }
+  .form-group { margin-bottom: 1.5rem; }
+  label { display: block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+  input[type="text"], textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 0.75rem 1rem; outline: none; transition: border-color 0.2s; resize: vertical; }
+  input[type="text"]:focus, textarea:focus { border-color: var(--accent); }
+  textarea { min-height: 140px; line-height: 1.6; }
+  .modal-actions { display: flex; gap: 1rem; margin-top: 2rem; justify-content: flex-end; }
+
+  /* TAG INPUT IN MODAL */
+  .tag-input-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .tag-input-row input { flex: 1; }
+  .tag-add-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tag-add-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    min-height: 24px;
+  }
+  .modal-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--accent);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: default;
+  }
+  .modal-tag .rm-tag {
+    cursor: pointer;
+    opacity: 0.6;
+    font-size: 0.75rem;
+    line-height: 1;
+    transition: opacity 0.15s;
+  }
+  .modal-tag .rm-tag:hover { opacity: 1; color: var(--danger); }
+
+  /* EXISTING TAGS IN MODAL */
+  .existing-tags-section { margin-bottom: 0.75rem; }
+  .existing-tags-label { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: #555; margin-bottom: 0.45rem; }
+  .existing-tags-list { display: flex; flex-wrap: wrap; gap: 0.4rem; min-height: 10px; }
+  .existing-tag-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid #3a3a3a;
+    background: transparent;
+    color: #777;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .existing-tag-btn:hover { border-color: rgba(201,168,76,0.5); color: var(--accent); }
+  .existing-tag-btn.selected { background: rgba(201,168,76,0.12); border-color: rgba(201,168,76,0.6); color: var(--accent); }
+  .existing-tag-btn.in-use { opacity: 0.3; cursor: default; pointer-events: none; }
+
+  /* EMPTY */
+  .empty-state { text-align: center; padding: 5rem 2rem; color: var(--text-muted); grid-column: 1 / -1; }
+  .empty-state .empty-icon { font-family: 'Playfair Display', serif; font-size: 4rem; opacity: 0.2; margin-bottom: 1rem; color: var(--accent); }
+  .empty-state p { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  @media (max-width: 640px) { header { padding: 1.25rem 1.5rem; } .filter-bar { padding: 0.75rem 1.5rem; } main { padding: 1.5rem; } .logo { font-size: 1.1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Fikir Panosu<span>idea board</span></div>
+  <div class="header-right">
+    <span class="card-count" id="cardCount">0 kart</span>
+    <button class="btn" onclick="openModal(null)">+ Yeni Kart</button>
+  </div>
+</header>
+
+<div class="filter-bar" id="filterBar">
+  <span class="filter-label">Filtre</span>
+  <span class="filter-empty" id="filterEmpty">henüz tag yok</span>
+</div>
+
+<main><div class="grid" id="grid"></div></main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <h2 id="modalTitle">Yeni Kart Ekle</h2>
+    <div class="form-group">
+      <label>Ön Yüz — Hatırlatma / Başlık</label>
+      <input type="text" id="inputFront" placeholder="Kısa bir hatırlatma veya başlık..." />
+    </div>
+    <div class="form-group">
+      <label>Arka Yüz — Detay Metni</label>
+      <textarea id="inputBack" placeholder="Buraya uzun notlar, detaylar, açıklamalar yazabilirsiniz..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Taglar</label>
+      <div class="existing-tags-section" id="existingTagsSection" style="display:none">
+        <div class="existing-tags-label">Mevcut taglar</div>
+        <div class="existing-tags-list" id="existingTagsList"></div>
+      </div>
+      <div class="tag-input-row">
+        <input type="text" id="inputTagText" placeholder="Yeni tag yaz, Enter veya Ekle..." />
+        <button class="tag-add-btn" onclick="addTagFromInput()">Ekle</button>
+      </div>
+      <div class="modal-tags" id="modalTagList"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-cancel" onclick="closeModal()">İptal</button>
+      <button class="btn" onclick="saveCard()">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'fikirPanosu_cards';
+  let cards = [];
+  let editingId = null;
+  let dragSrcId = null;
+  let activeTags = []; // selected filter tags
+  let modalTags = [];  // tags being edited in modal
+
+  // ── storage ──
+  function load() {
+    try { cards = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e) { cards = []; }
+  }
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+    updateCount();
+  }
+  function updateCount() {
+    var visible = getFilteredCards().length;
+    var total = cards.length;
+    document.getElementById('cardCount').textContent =
+      activeTags.length ? (visible + ' / ' + total + ' kart') : (total + ' kart');
+  }
+
+  function escHtml(str) {
+    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── tags helpers ──
+  function getAllTags() {
+    var all = {};
+    cards.forEach(function(c) {
+      (c.tags || []).forEach(function(t) { all[t] = true; });
+    });
+    return Object.keys(all).sort();
+  }
+
+  function getFilteredCards() {
+    if (!activeTags.length) return cards;
+    return cards.filter(function(c) {
+      return activeTags.every(function(t) { return (c.tags || []).indexOf(t) !== -1; });
+    });
+  }
+
+  // ── filter bar ──
+  function renderFilterBar() {
+    var bar = document.getElementById('filterBar');
+    var emptyEl = document.getElementById('filterEmpty');
+    var allTags = getAllTags();
+
+    // remove old tag buttons (keep label and empty notice)
+    var oldBtns = bar.querySelectorAll('.filter-tag');
+    oldBtns.forEach(function(b) { b.remove(); });
+
+    if (allTags.length === 0) {
+      emptyEl.style.display = 'inline';
+      return;
+    }
+    emptyEl.style.display = 'none';
+
+    // "Tümü" button
+    var allBtn = document.createElement('button');
+    allBtn.className = 'filter-tag all-tag' + (activeTags.length === 0 ? ' active' : '');
+    allBtn.textContent = 'Tümü';
+    allBtn.addEventListener('click', function() {
+      activeTags = [];
+      renderFilterBar();
+      render();
+    });
+    bar.appendChild(allBtn);
+
+    allTags.forEach(function(tag) {
+      var btn = document.createElement('button');
+      btn.className = 'filter-tag' + (activeTags.indexOf(tag) !== -1 ? ' active' : '');
+      btn.textContent = tag;
+      btn.addEventListener('click', function() {
+        var idx = activeTags.indexOf(tag);
+        if (idx === -1) activeTags.push(tag);
+        else activeTags.splice(idx, 1);
+        renderFilterBar();
+        render();
+      });
+      bar.appendChild(btn);
+    });
+  }
+
+  // ── render ──
+  function render() {
+    var grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    var filtered = getFilteredCards();
+
+    if (filtered.length === 0) {
+      var empty = document.createElement('div');
+      empty.className = 'empty-state';
+      empty.innerHTML = activeTags.length
+        ? '<div class="empty-icon">◈</div><p>Bu taglara sahip kart yok</p>'
+        : '<div class="empty-icon">◈</div><p>Henüz kart yok — ilk fikrini ekle</p>';
+      grid.appendChild(empty);
+    }
+
+    filtered.forEach(function(card, idx) {
+      var wrapper = document.createElement('div');
+      wrapper.className = 'card-wrapper';
+      wrapper.dataset.id = card.id;
+      wrapper.style.animationDelay = (idx * 0.04) + 's';
+
+      var tagsHtml = '';
+      if (card.tags && card.tags.length) {
+        tagsHtml = '<div class="card-tags">' +
+          card.tags.map(function(t) {
+            return '<span class="card-tag">' + escHtml(t) + '</span>';
+          }).join('') +
+        '</div>';
+      }
+
+      wrapper.innerHTML =
+        '<div class="drag-handle" title="Sürükleyerek sırala"><span></span><span></span><span></span></div>' +
+        '<div class="card-inner">' +
+          '<div class="card-front">' +
+            '<div class="card-number">— ' + String(idx + 1).padStart(2, '0') + '</div>' +
+            '<div class="card-title">' + escHtml(card.front) + '</div>' +
+            tagsHtml +
+            '<div class="card-hint">çevir</div>' +
+          '</div>' +
+          '<div class="card-back">' +
+            '<div class="card-back-label">Not</div>' +
+            '<div class="card-back-content">' + escHtml(card.back).replace(/\n/g, '<br>') + '</div>' +
+            '<div class="card-actions">' +
+              '<button class="edit-btn">Düzenle</button>' +
+              '<button class="del-btn">Sil</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      // flip
+      wrapper.querySelector('.card-front').addEventListener('click', function() { toggleFlip(wrapper); });
+      wrapper.querySelector('.card-back-content').addEventListener('click', function() { toggleFlip(wrapper); });
+      wrapper.querySelector('.card-back-label').addEventListener('click', function() { toggleFlip(wrapper); });
+
+      // tag click → filter
+      wrapper.querySelectorAll('.card-tag').forEach(function(tagEl) {
+        tagEl.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var t = tagEl.textContent;
+          if (activeTags.indexOf(t) === -1) activeTags.push(t);
+          else activeTags = activeTags.filter(function(x) { return x !== t; });
+          renderFilterBar();
+          render();
+        });
+      });
+
+      // edit / delete
+      wrapper.querySelector('.edit-btn').addEventListener('click', function(e) { e.stopPropagation(); openModal(card.id); });
+      wrapper.querySelector('.del-btn').addEventListener('click', function(e) { e.stopPropagation(); deleteCard(card.id); });
+
+      // drag
+      var handle = wrapper.querySelector('.drag-handle');
+      handle.addEventListener('mousedown', function() { wrapper.draggable = true; });
+      wrapper.addEventListener('dragstart', function(e) {
+        dragSrcId = card.id;
+        wrapper.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', card.id);
+      });
+      wrapper.addEventListener('dragend', function() {
+        wrapper.draggable = false;
+        wrapper.classList.remove('dragging');
+        document.querySelectorAll('.card-wrapper').forEach(function(w) { w.classList.remove('drag-over'); });
+      });
+      wrapper.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        if (card.id !== dragSrcId) wrapper.classList.add('drag-over');
+      });
+      wrapper.addEventListener('dragleave', function() { wrapper.classList.remove('drag-over'); });
+      wrapper.addEventListener('drop', function(e) {
+        e.preventDefault();
+        wrapper.classList.remove('drag-over');
+        if (dragSrcId && dragSrcId !== card.id) reorderCards(dragSrcId, card.id);
+      });
+
+      grid.appendChild(wrapper);
+    });
+
+    // add button (only when not filtering)
+    if (!activeTags.length) {
+      var addBtn = document.createElement('div');
+      addBtn.className = 'add-card-wrapper';
+      addBtn.innerHTML = '<span class="add-icon">+</span><span>Yeni Kart</span>';
+      addBtn.addEventListener('click', function() { openModal(null); });
+      grid.appendChild(addBtn);
+    }
+
+    updateCount();
+  }
+
+  function reorderCards(fromId, toId) {
+    var fromIdx = cards.findIndex(function(c) { return c.id === fromId; });
+    var toIdx   = cards.findIndex(function(c) { return c.id === toId; });
+    if (fromIdx === -1 || toIdx === -1) return;
+    var moved = cards.splice(fromIdx, 1)[0];
+    cards.splice(toIdx, 0, moved);
+    save(); render();
+  }
+
+  function toggleFlip(wrapper) { wrapper.classList.toggle('flipped'); }
+
+  // ── modal tag management ──
+  function renderModalTags() {
+    // selected tags (bottom chips)
+    var list = document.getElementById('modalTagList');
+    list.innerHTML = '';
+    modalTags.forEach(function(t, i) {
+      var span = document.createElement('span');
+      span.className = 'modal-tag';
+      span.innerHTML = escHtml(t) + '<span class="rm-tag" data-i="' + i + '">×</span>';
+      span.querySelector('.rm-tag').addEventListener('click', function() {
+        modalTags.splice(i, 1);
+        renderModalTags();
+      });
+      list.appendChild(span);
+    });
+
+    // existing tags from all cards (quick-add buttons)
+    var allTags = getAllTags();
+    var section = document.getElementById('existingTagsSection');
+    var tagsList = document.getElementById('existingTagsList');
+    if (allTags.length === 0) {
+      section.style.display = 'none';
+    } else {
+      section.style.display = 'block';
+      tagsList.innerHTML = '';
+      allTags.forEach(function(t) {
+        var btn = document.createElement('button');
+        var alreadyAdded = modalTags.indexOf(t) !== -1;
+        btn.className = 'existing-tag-btn' + (alreadyAdded ? ' in-use' : '');
+        btn.textContent = t;
+        btn.addEventListener('click', function() {
+          if (modalTags.indexOf(t) === -1) {
+            modalTags.push(t);
+            renderModalTags();
+          }
+        });
+        tagsList.appendChild(btn);
+      });
+    }
+  }
+
+  function addTagFromInput() {
+    var input = document.getElementById('inputTagText');
+    var parts = input.value.split(',');
+    var added = false;
+    parts.forEach(function(part) {
+      var val = part.trim();
+      if (!val) return;
+      if (modalTags.indexOf(val) === -1) { modalTags.push(val); added = true; }
+    });
+    input.value = '';
+    input.focus();
+    if (added) renderModalTags();
+  }
+
+  // ── modal ──
+  function openModal(id) {
+    editingId = id || null;
+    var front = document.getElementById('inputFront');
+    var back  = document.getElementById('inputBack');
+
+    if (editingId) {
+      var card = cards.find(function(c) { return c.id === editingId; });
+      if (!card) return;
+      document.getElementById('modalTitle').textContent = 'Kartı Düzenle';
+      front.value = card.front;
+      back.value  = card.back;
+      modalTags = (card.tags || []).slice();
+    } else {
+      document.getElementById('modalTitle').textContent = 'Yeni Kart Ekle';
+      front.value = ''; back.value = '';
+      modalTags = [];
+    }
+    renderModalTags();
+    document.getElementById('modalOverlay').classList.add('open');
+    setTimeout(function() { front.focus(); }, 300);
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    editingId = null; modalTags = [];
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  function saveCard() {
+    var front = document.getElementById('inputFront').value.trim();
+    var back  = document.getElementById('inputBack').value.trim();
+    // also capture any unsaved tag input
+    var pendingRaw = document.getElementById('inputTagText').value;
+    pendingRaw.split(',').forEach(function(part) {
+      var val = part.trim();
+      if (val && modalTags.indexOf(val) === -1) modalTags.push(val);
+    });
+    document.getElementById('inputTagText').value = '';
+
+    if (!front) { document.getElementById('inputFront').focus(); return; }
+
+    if (editingId) {
+      var idx = cards.findIndex(function(c) { return c.id === editingId; });
+      if (idx !== -1) { cards[idx].front = front; cards[idx].back = back; cards[idx].tags = modalTags.slice(); }
+    } else {
+      cards.push({ id: Date.now().toString(), front: front, back: back, tags: modalTags.slice() });
+    }
+    save();
+    // clean up activeTags that no longer exist
+    var allTags = getAllTags();
+    activeTags = activeTags.filter(function(t) { return allTags.indexOf(t) !== -1; });
+    renderFilterBar();
+    render();
+    closeModal();
+  }
+
+  function deleteCard(id) {
+    cards = cards.filter(function(c) { return c.id !== id; });
+    save();
+    var allTags = getAllTags();
+    activeTags = activeTags.filter(function(t) { return allTags.indexOf(t) !== -1; });
+    renderFilterBar();
+    render();
+  }
+
+  // ── keyboard ──
+  document.getElementById('inputTagText').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); addTagFromInput(); }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      if (document.getElementById('modalOverlay').classList.contains('open')) saveCard();
+    }
+  });
+
+  load();
+  renderFilterBar();
+  render();
+</script>
+</body>
+</html>
