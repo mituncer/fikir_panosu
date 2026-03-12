@@ -222,6 +222,13 @@
   }
   .detail-body::-webkit-scrollbar { width: 4px; }
   .detail-body::-webkit-scrollbar-thumb { background: var(--border); }
+  .detail-footer {
+    padding: 1rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 0.6rem;
+    justify-content: flex-end;
+  }
 
   /* DRAG HANDLE */
   .drag-handle { position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3.5px; cursor: grab; opacity: 0; transition: opacity 0.2s; z-index: 20; }
@@ -727,6 +734,9 @@
       span.textContent = t;
       tagsEl.appendChild(span);
     });
+    var currentId = id;
+    document.getElementById('detailEditBtn').onclick = function() { closeDetail(); openModal(currentId); };
+    document.getElementById('detailDelBtn').onclick = function() { closeDetail(); deleteCard(currentId); };
     document.getElementById('detailOverlay').classList.add('open');
   }
 
@@ -763,6 +773,10 @@
     </div>
     <div class="detail-tags" id="detailTags"></div>
     <div class="detail-body" id="detailBody"></div>
+    <div class="detail-footer">
+      <button class="btn btn-cancel" id="detailEditBtn">Düzenle</button>
+      <button class="btn" style="border-color:#c0392b;color:#c0392b" id="detailDelBtn">Sil</button>
+    </div>
   </div>
 </div>
 
