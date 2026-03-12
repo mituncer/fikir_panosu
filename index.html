@@ -119,6 +119,110 @@
   .card-actions button:hover { color: var(--text); border-color: var(--text-dim); }
   .card-actions .del-btn:hover { color: var(--danger); border-color: var(--danger); }
 
+  /* EXPAND BUTTON ON CARD BACK */
+  .expand-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #3a3a3a;
+    background: transparent;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 11px;
+    z-index: 10;
+  }
+  .expand-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* FULLSCREEN DETAIL OVERLAY */
+  .detail-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    padding: 2rem;
+  }
+  .detail-overlay.open { opacity: 1; pointer-events: all; }
+  .detail-box {
+    background: #111;
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 780px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transform: translateY(16px);
+    transition: transform 0.3s;
+  }
+  .detail-overlay.open .detail-box { transform: translateY(0); }
+  .detail-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent 60%);
+  }
+  .detail-header {
+    padding: 1.75rem 2rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .detail-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--text);
+    line-height: 1.35;
+    flex: 1;
+  }
+  .detail-close {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .detail-close:hover { border-color: var(--text-dim); color: var(--text); }
+  .detail-tags {
+    padding: 0.75rem 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .detail-body {
+    padding: 1.5rem 2rem 2rem;
+    overflow-y: auto;
+    flex: 1;
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: #bbb;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .detail-body::-webkit-scrollbar { width: 4px; }
+  .detail-body::-webkit-scrollbar-thumb { background: var(--border); }
+
   /* DRAG HANDLE */
   .drag-handle { position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3.5px; cursor: grab; opacity: 0; transition: opacity 0.2s; z-index: 20; }
   .drag-handle:active { cursor: grabbing; }
@@ -406,6 +510,7 @@
             '<div class="card-actions">' +
               '<button class="edit-btn">Düzenle</button>' +
               '<button class="del-btn">Sil</button>' +
+              '<button class="expand-btn" title="Buyut">&#x2922;</button>' +
             '</div>' +
           '</div>' +
         '</div>';
@@ -430,6 +535,7 @@
       // edit / delete
       wrapper.querySelector('.edit-btn').addEventListener('click', function(e) { e.stopPropagation(); openModal(card.id); });
       wrapper.querySelector('.del-btn').addEventListener('click', function(e) { e.stopPropagation(); deleteCard(card.id); });
+      wrapper.querySelector('.expand-btn').addEventListener('click', function(e) { e.stopPropagation(); openDetail(card.id); });
 
       // drag
       var handle = wrapper.querySelector('.drag-handle');
@@ -607,13 +713,38 @@
     render();
   }
 
+  // ── detail overlay ──
+  function openDetail(id) {
+    var card = cards.find(function(c) { return c.id === id; });
+    if (!card) return;
+    document.getElementById('detailTitle').textContent = card.front;
+    document.getElementById('detailBody').innerHTML = escHtml(card.back).split('\n').join('<br>');
+    var tagsEl = document.getElementById('detailTags');
+    tagsEl.innerHTML = '';
+    (card.tags || []).forEach(function(t) {
+      var span = document.createElement('span');
+      span.className = 'card-tag';
+      span.textContent = t;
+      tagsEl.appendChild(span);
+    });
+    document.getElementById('detailOverlay').classList.add('open');
+  }
+
+  function closeDetail() {
+    document.getElementById('detailOverlay').classList.remove('open');
+  }
+
+  function handleDetailOverlayClick(e) {
+    if (e.target === document.getElementById('detailOverlay')) closeDetail();
+  }
+
   // ── keyboard ──
   document.getElementById('inputTagText').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') { e.preventDefault(); addTagFromInput(); }
   });
 
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape') { closeModal(); closeDetail(); }
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       if (document.getElementById('modalOverlay').classList.contains('open')) saveCard();
     }
@@ -623,5 +754,17 @@
   renderFilterBar();
   render();
 </script>
+<!-- DETAIL OVERLAY -->
+<div class="detail-overlay" id="detailOverlay" onclick="handleDetailOverlayClick(event)">
+  <div class="detail-box">
+    <div class="detail-header">
+      <div class="detail-title" id="detailTitle"></div>
+      <button class="detail-close" onclick="closeDetail()">✕ Kapat</button>
+    </div>
+    <div class="detail-tags" id="detailTags"></div>
+    <div class="detail-body" id="detailBody"></div>
+  </div>
+</div>
+
 </body>
 </html>
