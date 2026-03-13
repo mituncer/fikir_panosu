@@ -19,54 +19,20 @@
   }
 
   /* HEADER */
-  header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 2rem 3rem; border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; background: rgba(14,14,14,0.92); backdrop-filter: blur(12px); z-index: 100;
-  }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 2rem 3rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(14,14,14,0.92); backdrop-filter: blur(12px); z-index: 100; }
   .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent); }
   .logo span { color: var(--text-dim); font-style: italic; font-size: 0.85rem; display: block; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-top: -2px; }
   .header-right { display: flex; align-items: center; gap: 1rem; }
   .card-count { font-size: 0.75rem; color: #bbb; letter-spacing: 0.15em; text-transform: uppercase; }
   .btn { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.4rem; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; transition: all 0.2s; }
   .btn:hover { background: var(--accent); color: #000; }
-  .btn-subtle { border-color: #333; color: #888; font-size: 0.7rem; padding: 0.6rem 1rem; }
-  .btn-subtle:hover { border-color: var(--accent); color: var(--accent); background: transparent; }
   .btn-cancel { border-color: var(--border); color: var(--text-muted); }
   .btn-cancel:hover { background: var(--border); color: var(--text); }
 
-  /* TAG FILTER BAR */
-  .filter-bar {
-    padding: 1rem 3rem;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    min-height: 56px;
-    background: rgba(14,14,14,0.7);
-  }
-  .filter-label {
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-right: 0.4rem;
-    white-space: nowrap;
-  }
-  .filter-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
-    padding: 0.3rem 0.75rem;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.18s;
-    border-radius: 2px;
-    white-space: nowrap;
-  }
+  /* FILTER BAR */
+  .filter-bar { padding: 1rem 3rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; min-height: 56px; background: rgba(14,14,14,0.7); }
+  .filter-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-right: 0.4rem; white-space: nowrap; }
+  .filter-tag { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em; padding: 0.3rem 0.75rem; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.18s; border-radius: 2px; white-space: nowrap; }
   .filter-tag:hover { border-color: var(--accent); color: var(--accent); }
   .filter-tag.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 500; }
   .filter-tag.all-tag { border-color: #444; color: #ccc; }
@@ -87,28 +53,9 @@
   .card-front::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); }
   .card-number { font-size: 0.7rem; color: #aaa; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; }
   .card-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--text); line-height: 1.4; flex: 1; }
-
-  /* TAGS ON CARD FRONT */
-  .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    margin-top: 0.6rem;
-  }
-  .card-tag {
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.18rem 0.5rem;
-    border: 1px solid #3a3a3a;
-    color: var(--accent);
-    border-color: rgba(201,168,76,0.35);
-    border-radius: 2px;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+  .card-tag { font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.18rem 0.5rem; border: 1px solid rgba(201,168,76,0.35); color: var(--accent); border-radius: 2px; cursor: pointer; transition: all 0.15s; }
   .card-tag:hover { background: rgba(201,168,76,0.12); }
-
   .card-hint { font-size: 0.7rem; color: #aaa; letter-spacing: 0.1em; text-transform: uppercase; display: flex; align-items: center; gap: 0.4rem; margin-top: 0.6rem; }
   .card-hint::before { content: ''; width: 20px; height: 1px; background: #777; }
   .card-back-content { font-size: 0.78rem; line-height: 1.7; color: #aaa; flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; cursor: pointer; }
@@ -120,147 +67,10 @@
   .card-actions button { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
   .card-actions button:hover { color: var(--text); border-color: var(--text-dim); }
   .card-actions .del-btn:hover { color: var(--danger); border-color: var(--danger); }
-
-  /* EXPAND BUTTON ON CARD BACK */
-  .expand-btn {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 26px;
-    height: 26px;
-    border: 1px solid #3a3a3a;
-    background: transparent;
-    color: #666;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    font-size: 11px;
-    z-index: 10;
-  }
+  .expand-btn { background: transparent; border: 1px solid #333; color: #666; cursor: pointer; padding: 0.2rem 0.45rem; font-size: 0.65rem; transition: all 0.2s; }
   .expand-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* FULLSCREEN DETAIL OVERLAY */
-  .detail-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s;
-    padding: 2rem;
-  }
-  .detail-overlay.open { opacity: 1; pointer-events: all; }
-  .detail-box {
-    background: #111;
-    border: 1px solid var(--border);
-    width: 100%;
-    max-width: 780px;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    transform: translateY(16px);
-    transition: transform 0.3s;
-  }
-  .detail-overlay.open .detail-box { transform: translateY(0); }
-  .detail-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), transparent 60%);
-  }
-  .detail-header {
-    padding: 1.75rem 2rem 1rem;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-  .detail-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: var(--text);
-    line-height: 1.35;
-    flex: 1;
-  }
-  .detail-close {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.4rem 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .detail-close:hover { border-color: var(--text-dim); color: var(--text); }
-  .detail-tags {
-    padding: 0.75rem 2rem 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-  .detail-body {
-    padding: 1.5rem 2rem 2rem;
-    overflow-y: auto;
-    flex: 1;
-    font-size: 0.9rem;
-    line-height: 1.85;
-    color: #bbb;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-  .detail-body::-webkit-scrollbar { width: 4px; }
-  .detail-body::-webkit-scrollbar-thumb { background: var(--border); }
-  .detail-footer {
-    padding: 1rem 2rem;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 0.6rem;
-    justify-content: flex-end;
-  }
-
-  /* EXPORT / SHARE MODAL */
-  .share-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.25s; padding: 1rem; }
-  .share-overlay.open { opacity: 1; pointer-events: all; }
-  .share-box { background: var(--surface); border: 1px solid var(--border); width: 100%; max-width: 420px; padding: 2rem; position: relative; transform: translateY(16px); transition: transform 0.3s; }
-  .share-overlay.open .share-box { transform: translateY(0); }
-  .share-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent 60%); }
-  .share-box h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--text); margin-bottom: 0.4rem; }
-  .share-subtitle { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.75rem; }
-  .share-options { display: flex; flex-direction: column; gap: 0.6rem; }
-  .share-option {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 0.85rem 1rem;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
-    cursor: pointer;
-    transition: all 0.18s;
-    width: 100%;
-    text-align: left;
-  }
-  .share-option:hover { border-color: var(--accent); color: var(--accent); }
-  .share-option .share-icon { font-size: 1.1rem; width: 24px; text-align: center; flex-shrink: 0; }
-  .share-option .share-desc { font-size: 0.6rem; color: var(--text-muted); display: block; margin-top: 1px; letter-spacing: 0.05em; }
-  .share-cancel { margin-top: 1rem; width: 100%; }
-
-  /* DRAG HANDLE */
+  /* DRAG */
   .drag-handle { position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3.5px; cursor: grab; opacity: 0; transition: opacity 0.2s; z-index: 20; }
   .drag-handle:active { cursor: grabbing; }
   .drag-handle span { display: block; width: 13px; height: 1.5px; background: var(--text-muted); border-radius: 1px; transition: background 0.2s; }
@@ -275,7 +85,7 @@
   .add-card-wrapper:hover { border-color: var(--accent); color: var(--accent); background: rgba(201,168,76,0.03); }
   .add-icon { font-size: 2rem; font-weight: 100; line-height: 1; font-family: 'Playfair Display', serif; opacity: 0.6; }
 
-  /* MODAL */
+  /* MODAL (card edit) */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.25s; padding: 1rem; }
   .modal-overlay.open { opacity: 1; pointer-events: all; }
   .modal { background: var(--surface); border: 1px solid var(--border); width: 100%; max-width: 560px; padding: 2.5rem; transform: translateY(20px); transition: transform 0.3s; position: relative; max-height: 90vh; overflow-y: auto; }
@@ -288,128 +98,98 @@
   input[type="text"]:focus, textarea:focus { border-color: var(--accent); }
   textarea { min-height: 140px; line-height: 1.6; }
   .modal-actions { display: flex; gap: 1rem; margin-top: 2rem; justify-content: flex-end; }
-
-  /* TAG INPUT IN MODAL */
-  .tag-input-row {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
+  .tag-input-row { display: flex; gap: 0.5rem; align-items: center; }
   .tag-input-row input { flex: 1; }
-  .tag-add-btn {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
+  .tag-add-btn { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.75rem 1rem; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
   .tag-add-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .modal-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.6rem;
-    min-height: 24px;
-  }
-  .modal-tag {
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.6rem;
-    border: 1px solid rgba(201,168,76,0.4);
-    color: var(--accent);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    cursor: default;
-  }
-  .modal-tag .rm-tag {
-    cursor: pointer;
-    opacity: 0.6;
-    font-size: 0.75rem;
-    line-height: 1;
-    transition: opacity 0.15s;
-  }
+  .modal-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; min-height: 24px; }
+  .modal-tag { font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.6rem; border: 1px solid rgba(201,168,76,0.4); color: var(--accent); border-radius: 2px; display: flex; align-items: center; gap: 0.4rem; }
+  .modal-tag .rm-tag { cursor: pointer; opacity: 0.6; font-size: 0.75rem; transition: opacity 0.15s; }
   .modal-tag .rm-tag:hover { opacity: 1; color: var(--danger); }
-
-  /* EXISTING TAGS IN MODAL */
   .existing-tags-section { margin-bottom: 0.75rem; }
   .existing-tags-label { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: #555; margin-bottom: 0.45rem; }
-  .existing-tags-list { display: flex; flex-wrap: wrap; gap: 0.4rem; min-height: 10px; }
-  .existing-tag-btn {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.65rem;
-    border: 1px solid #3a3a3a;
-    background: transparent;
-    color: #777;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
+  .existing-tags-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .existing-tag-btn { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.65rem; border: 1px solid #3a3a3a; background: transparent; color: #777; border-radius: 2px; cursor: pointer; transition: all 0.15s; }
   .existing-tag-btn:hover { border-color: rgba(201,168,76,0.5); color: var(--accent); }
-  .existing-tag-btn.selected { background: rgba(201,168,76,0.12); border-color: rgba(201,168,76,0.6); color: var(--accent); }
   .existing-tag-btn.in-use { opacity: 0.3; cursor: default; pointer-events: none; }
+
+  /* DETAIL OVERLAY */
+  .detail-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.25s; padding: 2rem; }
+  .detail-overlay.open { opacity: 1; pointer-events: all; }
+  .detail-box { background: #111; border: 1px solid var(--border); width: 100%; max-width: 780px; max-height: 85vh; display: flex; flex-direction: column; position: relative; transform: translateY(16px); transition: transform 0.3s; }
+  .detail-overlay.open .detail-box { transform: translateY(0); }
+  .detail-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent 60%); }
+  .detail-header { padding: 1.75rem 2rem 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+  .detail-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--text); line-height: 1.35; flex: 1; }
+  .detail-close { background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.4rem 0.8rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+  .detail-close:hover { border-color: var(--text-dim); color: var(--text); }
+  .detail-tags { padding: 0.75rem 2rem 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .detail-body { padding: 1.5rem 2rem; overflow-y: auto; flex: 1; font-size: 0.9rem; line-height: 1.85; color: #bbb; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+  .detail-body::-webkit-scrollbar { width: 4px; }
+  .detail-body::-webkit-scrollbar-thumb { background: var(--border); }
+  .detail-footer { padding: 1rem 2rem; border-top: 1px solid var(--border); display: flex; gap: 0.6rem; justify-content: flex-end; }
+  .btn-danger { border-color: var(--danger); color: var(--danger); }
+  .btn-danger:hover { background: var(--danger); color: #fff; }
+
+  /* SHARE OVERLAY */
+  .share-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.25s; padding: 1rem; }
+  .share-overlay.open { opacity: 1; pointer-events: all; }
+  .share-box { background: var(--surface); border: 1px solid var(--border); width: 100%; max-width: 480px; padding: 2.5rem; position: relative; transform: translateY(16px); transition: transform 0.3s; }
+  .share-overlay.open .share-box { transform: translateY(0); }
+  .share-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent 60%); }
+  .share-box h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); margin-bottom: 0.4rem; }
+  .share-sub { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.75rem; }
+  .share-section-label { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: #555; margin-bottom: 0.6rem; margin-top: 1.25rem; }
+  .share-options { display: flex; flex-direction: column; gap: 0.5rem; }
+  .share-option { display: flex; align-items: center; gap: 0.9rem; padding: 0.75rem 1rem; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; transition: all 0.18s; font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.05em; text-align: left; width: 100%; }
+  .share-option:hover { border-color: var(--accent); color: var(--accent); }
+  .share-option .so-icon { font-size: 1.1rem; width: 22px; text-align: center; flex-shrink: 0; }
+  .share-option .so-desc { font-size: 0.58rem; color: var(--text-muted); display: block; margin-top: 1px; }
+  .share-option:hover .so-desc { color: inherit; opacity: 0.7; }
+  .import-drop { border: 1px dashed var(--border); padding: 1.25rem; text-align: center; cursor: pointer; transition: border-color 0.2s; margin-top: 0.6rem; }
+  .import-drop:hover { border-color: var(--accent); }
+  .import-drop p { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .import-drop .imp-icon { font-size: 1.5rem; margin-bottom: 0.4rem; opacity: 0.4; }
+  .import-result { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 0; min-height: 1.8rem; }
+  .import-result.ok { color: #5a9; }
+  .import-result.err { color: var(--danger); }
+  .share-footer { display: flex; justify-content: flex-end; margin-top: 1rem; }
 
   /* EMPTY */
   .empty-state { text-align: center; padding: 5rem 2rem; color: var(--text-muted); grid-column: 1 / -1; }
   .empty-state .empty-icon { font-family: 'Playfair Display', serif; font-size: 4rem; opacity: 0.2; margin-bottom: 1rem; color: var(--accent); }
   .empty-state p { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; }
 
-  /* SHARE MODAL */
-  .share-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.25s; padding: 1rem; }
-  .share-overlay.open { opacity: 1; pointer-events: all; }
-  .share-box { background: var(--surface); border: 1px solid var(--border); width: 100%; max-width: 480px; padding: 2.5rem; position: relative; transform: translateY(16px); transition: transform 0.3s; }
-  .share-overlay.open .share-box { transform: translateY(0); }
-  .share-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent 60%); }
-  .share-box h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); margin-bottom: 0.5rem; }
-  .share-box .share-sub { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
-  .share-options { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
-  .share-option {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 0.85rem 1.1rem;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text);
-    cursor: pointer;
-    transition: all 0.18s;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
-    text-align: left;
-    width: 100%;
-  }
-  .share-option:hover { border-color: var(--accent); color: var(--accent); }
-  .share-option .so-icon { font-size: 1.2rem; width: 24px; text-align: center; flex-shrink: 0; }
-  .share-option .so-label { flex: 1; }
-  .share-option .so-desc { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; display: block; margin-top: 2px; }
-  .share-divider { height: 1px; background: var(--border); margin: 0.25rem 0; }
+  /* CONFIRM MODAL */
+  .confirm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 5000; opacity: 0; pointer-events: none; transition: opacity 0.2s; padding: 1rem; }
+  .confirm-overlay.open { opacity: 1; pointer-events: all; }
+  .confirm-box { background: var(--surface); border: 1px solid var(--border); width: 100%; max-width: 380px; padding: 2rem; position: relative; transform: translateY(12px); transition: transform 0.25s; }
+  .confirm-overlay.open .confirm-box { transform: translateY(0); }
+  .confirm-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--danger), transparent 60%); }
+  .confirm-box p { font-size: 0.8rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0.5rem; }
+  .confirm-box strong { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--text); display: block; margin-bottom: 1.25rem; }
+  .confirm-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
 
-  /* IMPORT AREA */
-  .import-drop {
-    border: 1px dashed var(--border);
-    padding: 1.5rem;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-bottom: 1rem;
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #222;
+    border: 1px solid var(--accent);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 0.75rem 1.5rem;
+    z-index: 9000;
+    opacity: 0;
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+    white-space: nowrap;
   }
-  .import-drop:hover { border-color: var(--accent); }
-  .import-drop p { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
-  .import-drop .imp-icon { font-size: 1.8rem; margin-bottom: 0.5rem; opacity: 0.4; }
-  .import-result { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 0; min-height: 1.5rem; }
-  .import-result.ok { color: #5a9; }
-  .import-result.err { color: var(--danger); }
-  .share-footer { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   @media (max-width: 640px) { header { padding: 1.25rem 1.5rem; } .filter-bar { padding: 0.75rem 1.5rem; } main { padding: 1.5rem; } .logo { font-size: 1.1rem; } }
 </style>
@@ -420,9 +200,7 @@
   <div class="logo">Fikir Panosu<span>idea board</span></div>
   <div class="header-right">
     <span class="card-count" id="cardCount">0 kart</span>
-    <button class="btn btn-subtle" onclick="triggerImport()" title="JSON dosyasından içe aktar">İçe Aktar</button>
-    <button class="btn btn-subtle" onclick="openShare()" title="Dışa aktar / paylaş">Dışa Aktar</button>
-    <button class="btn btn-cancel" onclick="openShareModal()">⇅ Aktar</button>
+    <button class="btn btn-cancel" onclick="openShareModal()">&#8645; Aktar</button>
     <button class="btn" onclick="openModal(null)">+ Yeni Kart</button>
   </div>
 </header>
@@ -434,8 +212,8 @@
 
 <main><div class="grid" id="grid"></div></main>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+<!-- CARD MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleModalOverlayClick(event)">
   <div class="modal">
     <h2 id="modalTitle">Yeni Kart Ekle</h2>
     <div class="form-group">
@@ -453,7 +231,7 @@
         <div class="existing-tags-list" id="existingTagsList"></div>
       </div>
       <div class="tag-input-row">
-        <input type="text" id="inputTagText" placeholder="Yeni tag yaz, Enter veya Ekle..." />
+        <input type="text" id="inputTagText" placeholder="Yeni tag — virgülle ayır, Enter ile ekle..." />
         <button class="tag-add-btn" onclick="addTagFromInput()">Ekle</button>
       </div>
       <div class="modal-tags" id="modalTagList"></div>
@@ -465,13 +243,67 @@
   </div>
 </div>
 
+<!-- DETAIL OVERLAY -->
+<div class="detail-overlay" id="detailOverlay" onclick="handleDetailOverlayClick(event)">
+  <div class="detail-box">
+    <div class="detail-header">
+      <div class="detail-title" id="detailTitle"></div>
+      <button class="detail-close" onclick="closeDetail()">&#x2715; Kapat</button>
+    </div>
+    <div class="detail-tags" id="detailTags"></div>
+    <div class="detail-body" id="detailBody"></div>
+    <div class="detail-footer">
+      <button class="btn btn-cancel" id="detailEditBtn">Düzenle</button>
+      <button class="btn btn-danger" id="detailDelBtn">Sil</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE OVERLAY -->
+<div class="share-overlay" id="shareOverlay" onclick="handleShareOverlayClick(event)">
+  <div class="share-box">
+    <h2>Aktar</h2>
+    <div class="share-sub" id="shareSubtitle">0 kart</div>
+
+    <div class="share-section-label">Dışa Aktar</div>
+    <div class="share-options">
+      <button class="share-option" onclick="doExportFile()">
+        <span class="so-icon">&#x2B07;</span>
+        <span><span>JSON Dosyası İndir</span><span class="so-desc">Bilgisayara kaydet, başka cihaza yükle</span></span>
+      </button>
+
+
+      <button class="share-option" id="nativeShareBtn" onclick="doShareNative()" style="display:none">
+        <span class="so-icon">&#x2197;</span>
+        <span><span>Paylaş…</span><span class="so-desc">Sistem paylaşım menüsü</span></span>
+      </button>
+      <button class="share-option" onclick="doShareCopy()">
+        <span class="so-icon">&#x2398;</span>
+        <span><span>Panoya Kopyala</span><span class="so-desc">JSON metnini kopyala</span></span>
+      </button>
+    </div>
+
+    <div class="share-section-label">İçe Aktar</div>
+    <div class="import-drop" id="importDrop">
+      <div class="imp-icon">&#x2B06;</div>
+      <p>JSON Dosyası Seç veya Sürükle</p>
+    </div>
+    <input type="file" id="importFileInput" accept=".json" style="display:none" />
+    <div class="import-result" id="importResult"></div>
+
+    <div class="share-footer">
+      <button class="btn btn-cancel" onclick="closeShareModal()">Kapat</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  const STORAGE_KEY = 'fikirPanosu_cards';
-  let cards = [];
-  let editingId = null;
-  let dragSrcId = null;
-  let activeTags = []; // selected filter tags
-  let modalTags = [];  // tags being edited in modal
+  var STORAGE_KEY = 'fikirPanosu_cards';
+  var cards = [];
+  var editingId = null;
+  var dragSrcId = null;
+  var activeTags = [];
+  var modalTags = [];
 
   // ── storage ──
   function load() {
@@ -488,20 +320,16 @@
     document.getElementById('cardCount').textContent =
       activeTags.length ? (visible + ' / ' + total + ' kart') : (total + ' kart');
   }
-
   function escHtml(str) {
     return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // ── tags helpers ──
+  // ── tags ──
   function getAllTags() {
     var all = {};
-    cards.forEach(function(c) {
-      (c.tags || []).forEach(function(t) { all[t] = true; });
-    });
+    cards.forEach(function(c) { (c.tags || []).forEach(function(t) { all[t] = true; }); });
     return Object.keys(all).sort();
   }
-
   function getFilteredCards() {
     if (!activeTags.length) return cards;
     return cards.filter(function(c) {
@@ -513,39 +341,23 @@
   function renderFilterBar() {
     var bar = document.getElementById('filterBar');
     var emptyEl = document.getElementById('filterEmpty');
+    bar.querySelectorAll('.filter-tag').forEach(function(b) { b.remove(); });
     var allTags = getAllTags();
-
-    // remove old tag buttons (keep label and empty notice)
-    var oldBtns = bar.querySelectorAll('.filter-tag');
-    oldBtns.forEach(function(b) { b.remove(); });
-
-    if (allTags.length === 0) {
-      emptyEl.style.display = 'inline';
-      return;
-    }
+    if (allTags.length === 0) { emptyEl.style.display = 'inline'; return; }
     emptyEl.style.display = 'none';
-
-    // "Tümü" button
     var allBtn = document.createElement('button');
     allBtn.className = 'filter-tag all-tag' + (activeTags.length === 0 ? ' active' : '');
     allBtn.textContent = 'Tümü';
-    allBtn.addEventListener('click', function() {
-      activeTags = [];
-      renderFilterBar();
-      render();
-    });
+    allBtn.addEventListener('click', function() { activeTags = []; renderFilterBar(); render(); });
     bar.appendChild(allBtn);
-
     allTags.forEach(function(tag) {
       var btn = document.createElement('button');
       btn.className = 'filter-tag' + (activeTags.indexOf(tag) !== -1 ? ' active' : '');
       btn.textContent = tag;
       btn.addEventListener('click', function() {
         var idx = activeTags.indexOf(tag);
-        if (idx === -1) activeTags.push(tag);
-        else activeTags.splice(idx, 1);
-        renderFilterBar();
-        render();
+        if (idx === -1) activeTags.push(tag); else activeTags.splice(idx, 1);
+        renderFilterBar(); render();
       });
       bar.appendChild(btn);
     });
@@ -556,36 +368,30 @@
     var grid = document.getElementById('grid');
     grid.innerHTML = '';
     var filtered = getFilteredCards();
-
     if (filtered.length === 0) {
       var empty = document.createElement('div');
       empty.className = 'empty-state';
       empty.innerHTML = activeTags.length
-        ? '<div class="empty-icon">◈</div><p>Bu taglara sahip kart yok</p>'
-        : '<div class="empty-icon">◈</div><p>Henüz kart yok — ilk fikrini ekle</p>';
+        ? '<div class="empty-icon">&#9672;</div><p>Bu taglara sahip kart yok</p>'
+        : '<div class="empty-icon">&#9672;</div><p>Henüz kart yok — ilk fikrini ekle</p>';
       grid.appendChild(empty);
     }
-
     filtered.forEach(function(card, idx) {
       var wrapper = document.createElement('div');
       wrapper.className = 'card-wrapper';
       wrapper.dataset.id = card.id;
       wrapper.style.animationDelay = (idx * 0.04) + 's';
-
       var tagsHtml = '';
       if (card.tags && card.tags.length) {
         tagsHtml = '<div class="card-tags">' +
-          card.tags.map(function(t) {
-            return '<span class="card-tag">' + escHtml(t) + '</span>';
-          }).join('') +
+          card.tags.map(function(t) { return '<span class="card-tag">' + escHtml(t) + '</span>'; }).join('') +
         '</div>';
       }
-
       wrapper.innerHTML =
         '<div class="drag-handle" title="Sürükleyerek sırala"><span></span><span></span><span></span></div>' +
         '<div class="card-inner">' +
           '<div class="card-front">' +
-            '<div class="card-number">— ' + String(idx + 1).padStart(2, '0') + '</div>' +
+            '<div class="card-number">&#8212; ' + String(idx + 1).padStart(2, '0') + '</div>' +
             '<div class="card-title">' + escHtml(card.front) + '</div>' +
             tagsHtml +
             '<div class="card-hint">çevir</div>' +
@@ -596,63 +402,49 @@
             '<div class="card-actions">' +
               '<button class="edit-btn">Düzenle</button>' +
               '<button class="del-btn">Sil</button>' +
-              '<button class="expand-btn" title="Buyut">&#x2922;</button>' +
+              '<button class="expand-btn" title="Büyüt">&#x2922;</button>' +
             '</div>' +
           '</div>' +
         '</div>';
 
-      // flip
       wrapper.querySelector('.card-front').addEventListener('click', function() { toggleFlip(wrapper); });
       wrapper.querySelector('.card-back-content').addEventListener('click', function() { toggleFlip(wrapper); });
       wrapper.querySelector('.card-back-label').addEventListener('click', function() { toggleFlip(wrapper); });
-
-      // tag click → filter
       wrapper.querySelectorAll('.card-tag').forEach(function(tagEl) {
         tagEl.addEventListener('click', function(e) {
           e.stopPropagation();
           var t = tagEl.textContent;
           if (activeTags.indexOf(t) === -1) activeTags.push(t);
           else activeTags = activeTags.filter(function(x) { return x !== t; });
-          renderFilterBar();
-          render();
+          renderFilterBar(); render();
         });
       });
-
-      // edit / delete
       wrapper.querySelector('.edit-btn').addEventListener('click', function(e) { e.stopPropagation(); openModal(card.id); });
       wrapper.querySelector('.del-btn').addEventListener('click', function(e) { e.stopPropagation(); deleteCard(card.id); });
       wrapper.querySelector('.expand-btn').addEventListener('click', function(e) { e.stopPropagation(); openDetail(card.id); });
 
-      // drag
       var handle = wrapper.querySelector('.drag-handle');
       handle.addEventListener('mousedown', function() { wrapper.draggable = true; });
       wrapper.addEventListener('dragstart', function(e) {
-        dragSrcId = card.id;
-        wrapper.classList.add('dragging');
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', card.id);
+        dragSrcId = card.id; wrapper.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', card.id);
       });
       wrapper.addEventListener('dragend', function() {
-        wrapper.draggable = false;
-        wrapper.classList.remove('dragging');
+        wrapper.draggable = false; wrapper.classList.remove('dragging');
         document.querySelectorAll('.card-wrapper').forEach(function(w) { w.classList.remove('drag-over'); });
       });
       wrapper.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
+        e.preventDefault(); e.dataTransfer.dropEffect = 'move';
         if (card.id !== dragSrcId) wrapper.classList.add('drag-over');
       });
       wrapper.addEventListener('dragleave', function() { wrapper.classList.remove('drag-over'); });
       wrapper.addEventListener('drop', function(e) {
-        e.preventDefault();
-        wrapper.classList.remove('drag-over');
+        e.preventDefault(); wrapper.classList.remove('drag-over');
         if (dragSrcId && dragSrcId !== card.id) reorderCards(dragSrcId, card.id);
       });
-
       grid.appendChild(wrapper);
     });
 
-    // add button (only when not filtering)
     if (!activeTags.length) {
       var addBtn = document.createElement('div');
       addBtn.className = 'add-card-wrapper';
@@ -660,60 +452,45 @@
       addBtn.addEventListener('click', function() { openModal(null); });
       grid.appendChild(addBtn);
     }
-
     updateCount();
   }
 
   function reorderCards(fromId, toId) {
-    var fromIdx = cards.findIndex(function(c) { return c.id === fromId; });
-    var toIdx   = cards.findIndex(function(c) { return c.id === toId; });
-    if (fromIdx === -1 || toIdx === -1) return;
-    var moved = cards.splice(fromIdx, 1)[0];
-    cards.splice(toIdx, 0, moved);
+    var fi = cards.findIndex(function(c) { return c.id === fromId; });
+    var ti = cards.findIndex(function(c) { return c.id === toId; });
+    if (fi === -1 || ti === -1) return;
+    var moved = cards.splice(fi, 1)[0];
+    cards.splice(ti, 0, moved);
     save(); render();
   }
-
   function toggleFlip(wrapper) { wrapper.classList.toggle('flipped'); }
 
-  // ── modal tag management ──
+  // ── card modal ──
   function renderModalTags() {
-    // selected tags (bottom chips)
     var list = document.getElementById('modalTagList');
     list.innerHTML = '';
     modalTags.forEach(function(t, i) {
       var span = document.createElement('span');
       span.className = 'modal-tag';
-      span.innerHTML = escHtml(t) + '<span class="rm-tag" data-i="' + i + '">×</span>';
-      span.querySelector('.rm-tag').addEventListener('click', function() {
-        modalTags.splice(i, 1);
-        renderModalTags();
-      });
+      span.innerHTML = escHtml(t) + '<span class="rm-tag">&times;</span>';
+      span.querySelector('.rm-tag').addEventListener('click', function() { modalTags.splice(i, 1); renderModalTags(); });
       list.appendChild(span);
     });
-
-    // existing tags from all cards (quick-add buttons)
     var allTags = getAllTags();
     var section = document.getElementById('existingTagsSection');
     var tagsList = document.getElementById('existingTagsList');
-    if (allTags.length === 0) {
-      section.style.display = 'none';
-    } else {
-      section.style.display = 'block';
-      tagsList.innerHTML = '';
-      allTags.forEach(function(t) {
-        var btn = document.createElement('button');
-        var alreadyAdded = modalTags.indexOf(t) !== -1;
-        btn.className = 'existing-tag-btn' + (alreadyAdded ? ' in-use' : '');
-        btn.textContent = t;
-        btn.addEventListener('click', function() {
-          if (modalTags.indexOf(t) === -1) {
-            modalTags.push(t);
-            renderModalTags();
-          }
-        });
-        tagsList.appendChild(btn);
+    if (allTags.length === 0) { section.style.display = 'none'; return; }
+    section.style.display = 'block';
+    tagsList.innerHTML = '';
+    allTags.forEach(function(t) {
+      var btn = document.createElement('button');
+      btn.className = 'existing-tag-btn' + (modalTags.indexOf(t) !== -1 ? ' in-use' : '');
+      btn.textContent = t;
+      btn.addEventListener('click', function() {
+        if (modalTags.indexOf(t) === -1) { modalTags.push(t); renderModalTags(); }
       });
-    }
+      tagsList.appendChild(btn);
+    });
   }
 
   function addTagFromInput() {
@@ -722,59 +499,42 @@
     var added = false;
     parts.forEach(function(part) {
       var val = part.trim();
-      if (!val) return;
-      if (modalTags.indexOf(val) === -1) { modalTags.push(val); added = true; }
+      if (val && modalTags.indexOf(val) === -1) { modalTags.push(val); added = true; }
     });
     input.value = '';
     input.focus();
     if (added) renderModalTags();
   }
 
-  // ── modal ──
   function openModal(id) {
     editingId = id || null;
     var front = document.getElementById('inputFront');
-    var back  = document.getElementById('inputBack');
-
+    var back = document.getElementById('inputBack');
     if (editingId) {
       var card = cards.find(function(c) { return c.id === editingId; });
       if (!card) return;
       document.getElementById('modalTitle').textContent = 'Kartı Düzenle';
-      front.value = card.front;
-      back.value  = card.back;
+      front.value = card.front; back.value = card.back;
       modalTags = (card.tags || []).slice();
     } else {
       document.getElementById('modalTitle').textContent = 'Yeni Kart Ekle';
-      front.value = ''; back.value = '';
-      modalTags = [];
+      front.value = ''; back.value = ''; modalTags = [];
     }
     renderModalTags();
     document.getElementById('modalOverlay').classList.add('open');
     setTimeout(function() { front.focus(); }, 300);
   }
-
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
-    editingId = null; modalTags = [];
-  }
-
-  function handleOverlayClick(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
-  }
+  function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); editingId = null; modalTags = []; }
+  function handleModalOverlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 
   function saveCard() {
     var front = document.getElementById('inputFront').value.trim();
-    var back  = document.getElementById('inputBack').value.trim();
-    // also capture any unsaved tag input
-    var pendingRaw = document.getElementById('inputTagText').value;
-    pendingRaw.split(',').forEach(function(part) {
-      var val = part.trim();
-      if (val && modalTags.indexOf(val) === -1) modalTags.push(val);
+    var back = document.getElementById('inputBack').value.trim();
+    document.getElementById('inputTagText').value.split(',').forEach(function(p) {
+      var v = p.trim(); if (v && modalTags.indexOf(v) === -1) modalTags.push(v);
     });
     document.getElementById('inputTagText').value = '';
-
     if (!front) { document.getElementById('inputFront').focus(); return; }
-
     if (editingId) {
       var idx = cards.findIndex(function(c) { return c.id === editingId; });
       if (idx !== -1) { cards[idx].front = front; cards[idx].back = back; cards[idx].tags = modalTags.slice(); }
@@ -782,21 +542,25 @@
       cards.push({ id: Date.now().toString(), front: front, back: back, tags: modalTags.slice() });
     }
     save();
-    // clean up activeTags that no longer exist
-    var allTags = getAllTags();
-    activeTags = activeTags.filter(function(t) { return allTags.indexOf(t) !== -1; });
-    renderFilterBar();
-    render();
-    closeModal();
+    activeTags = activeTags.filter(function(t) { return getAllTags().indexOf(t) !== -1; });
+    renderFilterBar(); render(); closeModal();
   }
 
   function deleteCard(id) {
-    cards = cards.filter(function(c) { return c.id !== id; });
-    save();
-    var allTags = getAllTags();
-    activeTags = activeTags.filter(function(t) { return allTags.indexOf(t) !== -1; });
-    renderFilterBar();
-    render();
+    var card = cards.find(function(c) { return c.id === id; });
+    if (!card) return;
+    document.getElementById('confirmCardTitle').textContent = card.front;
+    document.getElementById('confirmOverlay').classList.add('open');
+    document.getElementById('confirmOkBtn').onclick = function() {
+      closeConfirm();
+      cards = cards.filter(function(c) { return c.id !== id; });
+      save();
+      activeTags = activeTags.filter(function(t) { return getAllTags().indexOf(t) !== -1; });
+      renderFilterBar(); render();
+    };
+  }
+  function closeConfirm() {
+    document.getElementById('confirmOverlay').classList.remove('open');
   }
 
   // ── detail overlay ──
@@ -809,246 +573,166 @@
     tagsEl.innerHTML = '';
     (card.tags || []).forEach(function(t) {
       var span = document.createElement('span');
-      span.className = 'card-tag';
-      span.textContent = t;
+      span.className = 'card-tag'; span.textContent = t;
       tagsEl.appendChild(span);
     });
-    var currentId = id;
-    document.getElementById('detailEditBtn').onclick = function() { closeDetail(); openModal(currentId); };
-    document.getElementById('detailDelBtn').onclick = function() { closeDetail(); deleteCard(currentId); };
+    document.getElementById('detailEditBtn').onclick = function() { closeDetail(); openModal(id); };
+    document.getElementById('detailDelBtn').onclick = function() { closeDetail(); deleteCard(id); };
     document.getElementById('detailOverlay').classList.add('open');
   }
-
-  function closeDetail() {
-    document.getElementById('detailOverlay').classList.remove('open');
-  }
-
-  function handleDetailOverlayClick(e) {
-    if (e.target === document.getElementById('detailOverlay')) closeDetail();
-  }
-
-  // ── export / import ──
-  var _shareJson = '';
-
-  function openShare() {
-    var json = JSON.stringify(cards, null, 2);
-    _shareJson = json;
-    var subtitle = cards.length + ' kart dışa aktarılacak';
-    document.getElementById('shareSubtitle').textContent = subtitle;
-    // show native share button only if supported
-    document.getElementById('shareNativeBtn').style.display =
-      (navigator.share) ? 'flex' : 'none';
-    document.getElementById('shareOverlay').classList.add('open');
-  }
-
-  function closeShare() {
-    document.getElementById('shareOverlay').classList.remove('open');
-  }
-
-  function handleShareOverlayClick(e) {
-    if (e.target === document.getElementById('shareOverlay')) closeShare();
-  }
-
-  function doDownload() {
-    var blob = new Blob([_shareJson], { type: 'application/json' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'fikir-panosu-' + new Date().toISOString().slice(0,10) + '.json';
-    a.click();
-    URL.revokeObjectURL(url);
-    closeShare();
-  }
-
-  function doNativeShare() {
-    if (!navigator.share) return;
-    var blob = new Blob([_shareJson], { type: 'application/json' });
-    var file = new File([blob], 'fikir-panosu.json', { type: 'application/json' });
-    navigator.share({ title: 'Fikir Panosu', files: [file] })
-      .then(function() { closeShare(); })
-      .catch(function() {});
-  }
-
-  function doEmailShare() {
-    var subject = encodeURIComponent('Fikir Panosu - ' + cards.length + ' kart');
-    var body = encodeURIComponent(
-      'Fikir Panosu verilerini asagida bulabilirsin.\n\n' +
-      'Iceri aktarmak icin dosyayi kaydedip uygulamada "Iceri Aktar" butonunu kullan.\n\n' +
-      '--- VERI ---\n' + _shareJson
-    );
-    window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
-    closeShare();
-  }
-
-  function doCopyJson() {
-    navigator.clipboard.writeText(_shareJson).then(function() {
-      var btn = document.querySelector('.share-option:last-of-type .share-desc');
-      var orig = btn.textContent;
-      btn.textContent = 'Kopyalandı ✓';
-      setTimeout(function() { btn.textContent = orig; }, 2000);
-    });
-  }
-
-  function triggerImport() {
-    document.getElementById('importFileInput').click();
-  }
-
-  function handleImportFile(e) {
-    var file = e.target.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function(ev) {
-      try {
-        var imported = JSON.parse(ev.target.result);
-        if (!Array.isArray(imported)) throw new Error('Geçersiz format');
-        var existing = cards.map(function(c) { return c.id; });
-        var added = 0;
-        imported.forEach(function(card) {
-          if (card.id && card.front !== undefined) {
-            if (existing.indexOf(card.id) === -1) {
-              cards.push(card);
-              added++;
-            }
-          }
-        });
-        save();
-        renderFilterBar();
-        render();
-        alert(added + ' yeni kart eklendi' + (imported.length - added > 0 ? ', ' + (imported.length - added) + ' zaten vardı.' : '.'));
-      } catch(err) {
-        alert('Dosya okunamadı: ' + err.message);
-      }
-      e.target.value = '';
-    };
-    reader.readAsText(file);
-  }
+  function closeDetail() { document.getElementById('detailOverlay').classList.remove('open'); }
+  function handleDetailOverlayClick(e) { if (e.target === document.getElementById('detailOverlay')) closeDetail(); }
 
   // ── share / import ──
+  function getExportJson() { return JSON.stringify({ version: 1, cards: cards }, null, 2); }
+
   function openShareModal() {
     document.getElementById('shareSubtitle').textContent = cards.length + ' kart';
     document.getElementById('importResult').textContent = '';
-    if (navigator.share) document.getElementById('nativeShareBtn').style.display = 'flex';
+    document.getElementById('nativeShareBtn').style.display = navigator.share ? 'flex' : 'none';
     document.getElementById('shareOverlay').classList.add('open');
   }
-  function closeShareModal() {
-    document.getElementById('shareOverlay').classList.remove('open');
-  }
-  function handleShareOverlayClick(e) {
-    if (e.target === document.getElementById('shareOverlay')) closeShareModal();
-  }
-
-  function getExportData() {
-    return JSON.stringify({ version: 1, cards: cards }, null, 2);
-  }
+  function closeShareModal() { document.getElementById('shareOverlay').classList.remove('open'); }
+  function handleShareOverlayClick(e) { if (e.target === document.getElementById('shareOverlay')) closeShareModal(); }
 
   function doExportFile() {
-    var data = getExportData();
-    var blob = new Blob([data], { type: 'application/json' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'fikir-panosu-' + new Date().toISOString().slice(0,10) + '.json';
-    a.click();
-    URL.revokeObjectURL(url);
+    var json = getExportJson();
+    var blob = new Blob([json], { type: 'application/json' });
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var a = document.createElement('a');
+      a.href = e.target.result;
+      a.download = 'fikir-panosu-' + new Date().toISOString().slice(0,10) + '.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('✓ Dosya indirildi!');
+    };
+    reader.readAsDataURL(blob);
+  }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2500);
   }
 
   function doShareCopy() {
-    var data = getExportData();
-    navigator.clipboard.writeText(data).then(function() {
-      var el = document.getElementById('importResult');
-      el.className = 'import-result ok';
-      el.textContent = 'Panoya kopyalandı!';
-      setTimeout(function() { el.textContent = ''; }, 3000);
-    });
-  }
-
-  function doShareWhatsApp() {
-    var data = getExportData();
-    var msg = 'Fikir Panosu verilerim (' + cards.length + ' kart):
-
-' + data;
-    var url = 'https://wa.me/?text=' + encodeURIComponent(msg);
-    window.open(url, '_blank');
-  }
-
-  function doShareEmail() {
-    var data = getExportData();
-    var subject = 'Fikir Panosu - ' + cards.length + ' kart';
-    var body = 'Fikir Panosu verilerimi aktarıyorum:
-
-' + data;
-    window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-  }
-
-  function doShareNative() {
-    var data = getExportData();
-    var blob = new Blob([data], { type: 'application/json' });
-    var file = new File([blob], 'fikir-panosu.json', { type: 'application/json' });
-    navigator.share({ files: [file], title: 'Fikir Panosu' }).catch(function() {});
-  }
-
-  function triggerImportFile() {
-    document.getElementById('importFileInput').click();
-  }
-
-  function handleImportFile(e) {
-    var file = e.target.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function(ev) {
-      importFromText(ev.target.result);
-    };
-    reader.readAsText(file);
-    e.target.value = '';
-  }
-
-  function importFromText(text) {
-    var resultEl = document.getElementById('importResult');
-    try {
-      var parsed = JSON.parse(text);
-      var incoming = parsed.cards || parsed; // support both {version,cards} and raw array
-      if (!Array.isArray(incoming)) throw new Error('Geçersiz format');
-      var added = 0;
-      incoming.forEach(function(c) {
-        if (!c.id || !c.front) return;
-        if (!cards.find(function(x) { return x.id === c.id; })) {
-          cards.push(c);
-          added++;
-        }
+    var json = getExportJson();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(json).then(function() {
+        showToast('✓ Panoya kopyalandı!');
+      }).catch(function() {
+        fallbackCopy(json);
       });
-      save();
-      renderFilterBar();
-      render();
-      resultEl.className = 'import-result ok';
-      resultEl.textContent = added + ' kart eklendi!';
-      document.getElementById('shareSubtitle').textContent = cards.length + ' kart';
-    } catch(err) {
-      resultEl.className = 'import-result err';
-      resultEl.textContent = 'Hata: Geçersiz dosya';
+    } else {
+      fallbackCopy(json);
     }
   }
 
-  // drag-drop on import area
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try {
+      document.execCommand('copy');
+      showToast('✓ Panoya kopyalandı!');
+    } catch(e) {
+      showToast('✗ Kopyalama başarısız');
+    }
+    document.body.removeChild(ta);
+  }
+  function doShareWhatsApp() {
+    // Step 1: download the file
+    doExportFile();
+    // Step 2: show instructions then open WhatsApp
+    setTimeout(function() {
+      var ok = confirm(
+        'Dosya indirildi!\n\n' +
+        'Şimdi WhatsApp açılacak.\n' +
+        'Kişiyi seçtikten sonra + ikonuna tıklayıp indirilen JSON dosyasını ekle.'
+      );
+      if (ok) window.open('https://web.whatsapp.com', '_blank');
+    }, 600);
+  }
+  function doShareEmail() {
+    // Step 1: download the file
+    doExportFile();
+    // Step 2: open mail with instructions in body
+    setTimeout(function() {
+      var subject = encodeURIComponent('Fikir Panosu - ' + cards.length + ' kart');
+      var body = encodeURIComponent(
+        'Fikir Panosu verilerini aktariyorum (' + cards.length + ' kart).\n\n' +
+        'Indirilen JSON dosyasini bu maile ekleyip gonder.\n\n' +
+        'Iceri aktarmak icin: Fikir Panosu > Aktar > JSON Dosyasi Yukle'
+      );
+      window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+    }, 600);
+  }
+  function doShareNative() {
+    var json = getExportJson();
+    var blob = new Blob([json], { type: 'application/json' });
+    var file = new File([blob], 'fikir-panosu.json', { type: 'application/json' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: 'Fikir Panosu' })
+        .then(function() { showToast('✓ Paylaşıldı!'); })
+        .catch(function(e) { if (e.name !== 'AbortError') showToast('✗ Paylaşım iptal edildi'); });
+    } else {
+      showToast('Bu cihazda dosya paylaşımı desteklenmiyor');
+    }
+  }
+
+  function importFromText(text) {
+    var el = document.getElementById('importResult');
+    try {
+      var parsed = JSON.parse(text);
+      var incoming = Array.isArray(parsed) ? parsed : (parsed.cards || []);
+      if (!Array.isArray(incoming)) throw new Error();
+      var added = 0;
+      incoming.forEach(function(c) {
+        if (!c.id || !c.front) return;
+        if (!cards.find(function(x) { return x.id === c.id; })) { cards.push(c); added++; }
+      });
+      save(); renderFilterBar(); render();
+      el.className = 'import-result ok'; el.textContent = added + ' kart eklendi!';
+      document.getElementById('shareSubtitle').textContent = cards.length + ' kart';
+    } catch(err) {
+      el.className = 'import-result err'; el.textContent = 'Hata: Geçersiz dosya';
+    }
+  }
+
+  // import drop zone
   var importDrop = document.getElementById('importDrop');
+  var importFileInput = document.getElementById('importFileInput');
+  importDrop.addEventListener('click', function() { importFileInput.click(); });
   importDrop.addEventListener('dragover', function(e) { e.preventDefault(); importDrop.style.borderColor = 'var(--accent)'; });
   importDrop.addEventListener('dragleave', function() { importDrop.style.borderColor = ''; });
   importDrop.addEventListener('drop', function(e) {
-    e.preventDefault();
-    importDrop.style.borderColor = '';
-    var file = e.dataTransfer.files[0];
-    if (!file) return;
+    e.preventDefault(); importDrop.style.borderColor = '';
+    var file = e.dataTransfer.files[0]; if (!file) return;
     var reader = new FileReader();
     reader.onload = function(ev) { importFromText(ev.target.result); };
     reader.readAsText(file);
   });
+  importFileInput.addEventListener('change', function(e) {
+    var file = e.target.files[0]; if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) { importFromText(ev.target.result); };
+    reader.readAsText(file);
+    importFileInput.value = '';
+  });
 
-  // ── keyboard ──
+  // tag input enter key
   document.getElementById('inputTagText').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') { e.preventDefault(); addTagFromInput(); }
   });
 
+  // keyboard shortcuts
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { closeModal(); closeDetail(); closeShareModal(); }
+    if (e.key === 'Escape') { closeModal(); closeDetail(); closeShareModal(); closeConfirm(); }
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       if (document.getElementById('modalOverlay').classList.contains('open')) saveCard();
     }
@@ -1058,108 +742,16 @@
   renderFilterBar();
   render();
 </script>
-<!-- SHARE / EXPORT MODAL -->
-<div class="share-overlay" id="shareOverlay" onclick="handleShareOverlayClick(event)">
-  <div class="share-box">
-    <h3>Dışa Aktar</h3>
-    <p class="share-subtitle" id="shareSubtitle"></p>
-    <div class="share-options">
-      <button class="share-option" onclick="doDownload()">
-        <span class="share-icon">⬇</span>
-        <span>
-          JSON Dosyası İndir
-          <span class="share-desc">Bilgisayara kaydet, sonra içe aktar</span>
-        </span>
-      </button>
-      <button class="share-option" id="shareNativeBtn" onclick="doNativeShare()" style="display:none">
-        <span class="share-icon">↗</span>
-        <span>
-          Paylaş (WhatsApp, E-posta…)
-          <span class="share-desc">Telefonun paylaşım menüsünü aç</span>
-        </span>
-      </button>
-      <button class="share-option" onclick="doEmailShare()">
-        <span class="share-icon">✉</span>
-        <span>
-          E-posta ile Gönder
-          <span class="share-desc">Veriyi e-posta istemcisinde aç</span>
-        </span>
-      </button>
-      <button class="share-option" onclick="doCopyJson()">
-        <span class="share-icon">⧉</span>
-        <span>
-          JSON'u Kopyala
-          <span class="share-desc">Panoya kopyala, yapıştırarak paylaş</span>
-        </span>
-      </button>
-    </div>
-    <button class="btn btn-cancel share-cancel" onclick="closeShare()">İptal</button>
-  </div>
-</div>
-
-<!-- IMPORT FILE INPUT (hidden) -->
-<input type="file" id="importFileInput" accept=".json" style="display:none" onchange="handleImportFile(event)" />
-
-<!-- SHARE / IMPORT OVERLAY -->
-<div class="share-overlay" id="shareOverlay" onclick="handleShareOverlayClick(event)">
-  <div class="share-box">
-    <h2>Aktar</h2>
-    <div class="share-sub" id="shareSubtitle">0 kart</div>
-
-    <div class="share-options" id="shareOptions">
-      <button class="share-option" onclick="doExportFile()">
-        <span class="so-icon">⬇</span>
-        <span class="so-label">JSON Dosyası İndir<span class="so-desc">Bilgisayara kaydet, sonra başka cihaza yükle</span></span>
-      </button>
-      <button class="share-option" onclick="doShareWhatsApp()">
-        <span class="so-icon">💬</span>
-        <span class="so-label">WhatsApp ile Paylaş<span class="so-desc">Veriyi mesaj olarak gönder</span></span>
-      </button>
-      <button class="share-option" onclick="doShareEmail()">
-        <span class="so-icon">✉</span>
-        <span class="so-label">E-posta ile Gönder<span class="so-desc">Mail uygulaması açılır</span></span>
-      </button>
-      <button class="share-option" onclick="doShareNative()" id="nativeShareBtn" style="display:none">
-        <span class="so-icon">↗</span>
-        <span class="so-label">Paylaş…<span class="so-desc">Sistem paylaşım menüsü (mobil)</span></span>
-      </button>
-      <div class="share-divider"></div>
-      <button class="share-option" onclick="doShareCopy()">
-        <span class="so-icon">⎘</span>
-        <span class="so-label">Panoya Kopyala<span class="so-desc">JSON metnini kopyala</span></span>
-      </button>
-    </div>
-
-    <div class="import-drop" id="importDrop" onclick="triggerImportFile()">
-      <div class="imp-icon">⬆</div>
-      <p>JSON Dosyası Yükle</p>
-      <p style="font-size:0.6rem;margin-top:0.3rem;opacity:0.5">Tıkla veya sürükle-bırak</p>
-    </div>
-    <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="handleImportFile(event)" />
-    <div class="import-result" id="importResult"></div>
-
-    <div class="share-footer">
-      <span style="font-size:0.6rem;color:#444;letter-spacing:0.08em">İçe aktarma mevcut kartlara eklenir</span>
-      <button class="btn btn-cancel" onclick="closeShareModal()">Kapat</button>
+  <div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-box">
+      <p>Bu kart silinecek:</p>
+      <strong id="confirmCardTitle"></strong>
+      <div class="confirm-actions">
+        <button class="btn btn-cancel" onclick="closeConfirm()">İptal</button>
+        <button class="btn btn-danger" id="confirmOkBtn">Evet, Sil</button>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- DETAIL OVERLAY -->
-<div class="detail-overlay" id="detailOverlay" onclick="handleDetailOverlayClick(event)">
-  <div class="detail-box">
-    <div class="detail-header">
-      <div class="detail-title" id="detailTitle"></div>
-      <button class="detail-close" onclick="closeDetail()">✕ Kapat</button>
-    </div>
-    <div class="detail-tags" id="detailTags"></div>
-    <div class="detail-body" id="detailBody"></div>
-    <div class="detail-footer">
-      <button class="btn btn-cancel" id="detailEditBtn">Düzenle</button>
-      <button class="btn" style="border-color:#c0392b;color:#c0392b" id="detailDelBtn">Sil</button>
-    </div>
-  </div>
-</div>
-
+  <div class="toast" id="toast"></div>
 </body>
 </html>
