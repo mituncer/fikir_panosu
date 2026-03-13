@@ -30,6 +30,8 @@
   .card-count { font-size: 0.75rem; color: #bbb; letter-spacing: 0.15em; text-transform: uppercase; }
   .btn { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.4rem; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; transition: all 0.2s; }
   .btn:hover { background: var(--accent); color: #000; }
+  .btn-subtle { border-color: #333; color: #888; font-size: 0.7rem; padding: 0.6rem 1rem; }
+  .btn-subtle:hover { border-color: var(--accent); color: var(--accent); background: transparent; }
   .btn-cancel { border-color: var(--border); color: var(--text-muted); }
   .btn-cancel:hover { background: var(--border); color: var(--text); }
 
@@ -230,6 +232,34 @@
     justify-content: flex-end;
   }
 
+  /* EXPORT / SHARE MODAL */
+  .share-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.25s; padding: 1rem; }
+  .share-overlay.open { opacity: 1; pointer-events: all; }
+  .share-box { background: var(--surface); border: 1px solid var(--border); width: 100%; max-width: 420px; padding: 2rem; position: relative; transform: translateY(16px); transition: transform 0.3s; }
+  .share-overlay.open .share-box { transform: translateY(0); }
+  .share-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent 60%); }
+  .share-box h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--text); margin-bottom: 0.4rem; }
+  .share-subtitle { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.75rem; }
+  .share-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .share-option {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.18s;
+    width: 100%;
+    text-align: left;
+  }
+  .share-option:hover { border-color: var(--accent); color: var(--accent); }
+  .share-option .share-icon { font-size: 1.1rem; width: 24px; text-align: center; flex-shrink: 0; }
+  .share-option .share-desc { font-size: 0.6rem; color: var(--text-muted); display: block; margin-top: 1px; letter-spacing: 0.05em; }
+  .share-cancel { margin-top: 1rem; width: 100%; }
+
   /* DRAG HANDLE */
   .drag-handle { position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3.5px; cursor: grab; opacity: 0; transition: opacity 0.2s; z-index: 20; }
   .drag-handle:active { cursor: grabbing; }
@@ -335,6 +365,52 @@
   .empty-state .empty-icon { font-family: 'Playfair Display', serif; font-size: 4rem; opacity: 0.2; margin-bottom: 1rem; color: var(--accent); }
   .empty-state p { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; }
 
+  /* SHARE MODAL */
+  .share-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.25s; padding: 1rem; }
+  .share-overlay.open { opacity: 1; pointer-events: all; }
+  .share-box { background: var(--surface); border: 1px solid var(--border); width: 100%; max-width: 480px; padding: 2.5rem; position: relative; transform: translateY(16px); transition: transform 0.3s; }
+  .share-overlay.open .share-box { transform: translateY(0); }
+  .share-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent 60%); }
+  .share-box h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); margin-bottom: 0.5rem; }
+  .share-box .share-sub { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+  .share-options { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  .share-option {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.85rem 1.1rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-align: left;
+    width: 100%;
+  }
+  .share-option:hover { border-color: var(--accent); color: var(--accent); }
+  .share-option .so-icon { font-size: 1.2rem; width: 24px; text-align: center; flex-shrink: 0; }
+  .share-option .so-label { flex: 1; }
+  .share-option .so-desc { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; display: block; margin-top: 2px; }
+  .share-divider { height: 1px; background: var(--border); margin: 0.25rem 0; }
+
+  /* IMPORT AREA */
+  .import-drop {
+    border: 1px dashed var(--border);
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 1rem;
+  }
+  .import-drop:hover { border-color: var(--accent); }
+  .import-drop p { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .import-drop .imp-icon { font-size: 1.8rem; margin-bottom: 0.5rem; opacity: 0.4; }
+  .import-result { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 0; min-height: 1.5rem; }
+  .import-result.ok { color: #5a9; }
+  .import-result.err { color: var(--danger); }
+  .share-footer { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+
   @media (max-width: 640px) { header { padding: 1.25rem 1.5rem; } .filter-bar { padding: 0.75rem 1.5rem; } main { padding: 1.5rem; } .logo { font-size: 1.1rem; } }
 </style>
 </head>
@@ -344,6 +420,9 @@
   <div class="logo">Fikir Panosu<span>idea board</span></div>
   <div class="header-right">
     <span class="card-count" id="cardCount">0 kart</span>
+    <button class="btn btn-subtle" onclick="triggerImport()" title="JSON dosyasından içe aktar">İçe Aktar</button>
+    <button class="btn btn-subtle" onclick="openShare()" title="Dışa aktar / paylaş">Dışa Aktar</button>
+    <button class="btn btn-cancel" onclick="openShareModal()">⇅ Aktar</button>
     <button class="btn" onclick="openModal(null)">+ Yeni Kart</button>
   </div>
 </header>
@@ -748,13 +827,228 @@
     if (e.target === document.getElementById('detailOverlay')) closeDetail();
   }
 
+  // ── export / import ──
+  var _shareJson = '';
+
+  function openShare() {
+    var json = JSON.stringify(cards, null, 2);
+    _shareJson = json;
+    var subtitle = cards.length + ' kart dışa aktarılacak';
+    document.getElementById('shareSubtitle').textContent = subtitle;
+    // show native share button only if supported
+    document.getElementById('shareNativeBtn').style.display =
+      (navigator.share) ? 'flex' : 'none';
+    document.getElementById('shareOverlay').classList.add('open');
+  }
+
+  function closeShare() {
+    document.getElementById('shareOverlay').classList.remove('open');
+  }
+
+  function handleShareOverlayClick(e) {
+    if (e.target === document.getElementById('shareOverlay')) closeShare();
+  }
+
+  function doDownload() {
+    var blob = new Blob([_shareJson], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'fikir-panosu-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    closeShare();
+  }
+
+  function doNativeShare() {
+    if (!navigator.share) return;
+    var blob = new Blob([_shareJson], { type: 'application/json' });
+    var file = new File([blob], 'fikir-panosu.json', { type: 'application/json' });
+    navigator.share({ title: 'Fikir Panosu', files: [file] })
+      .then(function() { closeShare(); })
+      .catch(function() {});
+  }
+
+  function doEmailShare() {
+    var subject = encodeURIComponent('Fikir Panosu - ' + cards.length + ' kart');
+    var body = encodeURIComponent(
+      'Fikir Panosu verilerini asagida bulabilirsin.\n\n' +
+      'Iceri aktarmak icin dosyayi kaydedip uygulamada "Iceri Aktar" butonunu kullan.\n\n' +
+      '--- VERI ---\n' + _shareJson
+    );
+    window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+    closeShare();
+  }
+
+  function doCopyJson() {
+    navigator.clipboard.writeText(_shareJson).then(function() {
+      var btn = document.querySelector('.share-option:last-of-type .share-desc');
+      var orig = btn.textContent;
+      btn.textContent = 'Kopyalandı ✓';
+      setTimeout(function() { btn.textContent = orig; }, 2000);
+    });
+  }
+
+  function triggerImport() {
+    document.getElementById('importFileInput').click();
+  }
+
+  function handleImportFile(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        var imported = JSON.parse(ev.target.result);
+        if (!Array.isArray(imported)) throw new Error('Geçersiz format');
+        var existing = cards.map(function(c) { return c.id; });
+        var added = 0;
+        imported.forEach(function(card) {
+          if (card.id && card.front !== undefined) {
+            if (existing.indexOf(card.id) === -1) {
+              cards.push(card);
+              added++;
+            }
+          }
+        });
+        save();
+        renderFilterBar();
+        render();
+        alert(added + ' yeni kart eklendi' + (imported.length - added > 0 ? ', ' + (imported.length - added) + ' zaten vardı.' : '.'));
+      } catch(err) {
+        alert('Dosya okunamadı: ' + err.message);
+      }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  }
+
+  // ── share / import ──
+  function openShareModal() {
+    document.getElementById('shareSubtitle').textContent = cards.length + ' kart';
+    document.getElementById('importResult').textContent = '';
+    if (navigator.share) document.getElementById('nativeShareBtn').style.display = 'flex';
+    document.getElementById('shareOverlay').classList.add('open');
+  }
+  function closeShareModal() {
+    document.getElementById('shareOverlay').classList.remove('open');
+  }
+  function handleShareOverlayClick(e) {
+    if (e.target === document.getElementById('shareOverlay')) closeShareModal();
+  }
+
+  function getExportData() {
+    return JSON.stringify({ version: 1, cards: cards }, null, 2);
+  }
+
+  function doExportFile() {
+    var data = getExportData();
+    var blob = new Blob([data], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'fikir-panosu-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function doShareCopy() {
+    var data = getExportData();
+    navigator.clipboard.writeText(data).then(function() {
+      var el = document.getElementById('importResult');
+      el.className = 'import-result ok';
+      el.textContent = 'Panoya kopyalandı!';
+      setTimeout(function() { el.textContent = ''; }, 3000);
+    });
+  }
+
+  function doShareWhatsApp() {
+    var data = getExportData();
+    var msg = 'Fikir Panosu verilerim (' + cards.length + ' kart):
+
+' + data;
+    var url = 'https://wa.me/?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
+  }
+
+  function doShareEmail() {
+    var data = getExportData();
+    var subject = 'Fikir Panosu - ' + cards.length + ' kart';
+    var body = 'Fikir Panosu verilerimi aktarıyorum:
+
+' + data;
+    window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  }
+
+  function doShareNative() {
+    var data = getExportData();
+    var blob = new Blob([data], { type: 'application/json' });
+    var file = new File([blob], 'fikir-panosu.json', { type: 'application/json' });
+    navigator.share({ files: [file], title: 'Fikir Panosu' }).catch(function() {});
+  }
+
+  function triggerImportFile() {
+    document.getElementById('importFileInput').click();
+  }
+
+  function handleImportFile(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      importFromText(ev.target.result);
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  }
+
+  function importFromText(text) {
+    var resultEl = document.getElementById('importResult');
+    try {
+      var parsed = JSON.parse(text);
+      var incoming = parsed.cards || parsed; // support both {version,cards} and raw array
+      if (!Array.isArray(incoming)) throw new Error('Geçersiz format');
+      var added = 0;
+      incoming.forEach(function(c) {
+        if (!c.id || !c.front) return;
+        if (!cards.find(function(x) { return x.id === c.id; })) {
+          cards.push(c);
+          added++;
+        }
+      });
+      save();
+      renderFilterBar();
+      render();
+      resultEl.className = 'import-result ok';
+      resultEl.textContent = added + ' kart eklendi!';
+      document.getElementById('shareSubtitle').textContent = cards.length + ' kart';
+    } catch(err) {
+      resultEl.className = 'import-result err';
+      resultEl.textContent = 'Hata: Geçersiz dosya';
+    }
+  }
+
+  // drag-drop on import area
+  var importDrop = document.getElementById('importDrop');
+  importDrop.addEventListener('dragover', function(e) { e.preventDefault(); importDrop.style.borderColor = 'var(--accent)'; });
+  importDrop.addEventListener('dragleave', function() { importDrop.style.borderColor = ''; });
+  importDrop.addEventListener('drop', function(e) {
+    e.preventDefault();
+    importDrop.style.borderColor = '';
+    var file = e.dataTransfer.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) { importFromText(ev.target.result); };
+    reader.readAsText(file);
+  });
+
   // ── keyboard ──
   document.getElementById('inputTagText').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') { e.preventDefault(); addTagFromInput(); }
   });
 
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { closeModal(); closeDetail(); }
+    if (e.key === 'Escape') { closeModal(); closeDetail(); closeShareModal(); }
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       if (document.getElementById('modalOverlay').classList.contains('open')) saveCard();
     }
@@ -764,6 +1058,93 @@
   renderFilterBar();
   render();
 </script>
+<!-- SHARE / EXPORT MODAL -->
+<div class="share-overlay" id="shareOverlay" onclick="handleShareOverlayClick(event)">
+  <div class="share-box">
+    <h3>Dışa Aktar</h3>
+    <p class="share-subtitle" id="shareSubtitle"></p>
+    <div class="share-options">
+      <button class="share-option" onclick="doDownload()">
+        <span class="share-icon">⬇</span>
+        <span>
+          JSON Dosyası İndir
+          <span class="share-desc">Bilgisayara kaydet, sonra içe aktar</span>
+        </span>
+      </button>
+      <button class="share-option" id="shareNativeBtn" onclick="doNativeShare()" style="display:none">
+        <span class="share-icon">↗</span>
+        <span>
+          Paylaş (WhatsApp, E-posta…)
+          <span class="share-desc">Telefonun paylaşım menüsünü aç</span>
+        </span>
+      </button>
+      <button class="share-option" onclick="doEmailShare()">
+        <span class="share-icon">✉</span>
+        <span>
+          E-posta ile Gönder
+          <span class="share-desc">Veriyi e-posta istemcisinde aç</span>
+        </span>
+      </button>
+      <button class="share-option" onclick="doCopyJson()">
+        <span class="share-icon">⧉</span>
+        <span>
+          JSON'u Kopyala
+          <span class="share-desc">Panoya kopyala, yapıştırarak paylaş</span>
+        </span>
+      </button>
+    </div>
+    <button class="btn btn-cancel share-cancel" onclick="closeShare()">İptal</button>
+  </div>
+</div>
+
+<!-- IMPORT FILE INPUT (hidden) -->
+<input type="file" id="importFileInput" accept=".json" style="display:none" onchange="handleImportFile(event)" />
+
+<!-- SHARE / IMPORT OVERLAY -->
+<div class="share-overlay" id="shareOverlay" onclick="handleShareOverlayClick(event)">
+  <div class="share-box">
+    <h2>Aktar</h2>
+    <div class="share-sub" id="shareSubtitle">0 kart</div>
+
+    <div class="share-options" id="shareOptions">
+      <button class="share-option" onclick="doExportFile()">
+        <span class="so-icon">⬇</span>
+        <span class="so-label">JSON Dosyası İndir<span class="so-desc">Bilgisayara kaydet, sonra başka cihaza yükle</span></span>
+      </button>
+      <button class="share-option" onclick="doShareWhatsApp()">
+        <span class="so-icon">💬</span>
+        <span class="so-label">WhatsApp ile Paylaş<span class="so-desc">Veriyi mesaj olarak gönder</span></span>
+      </button>
+      <button class="share-option" onclick="doShareEmail()">
+        <span class="so-icon">✉</span>
+        <span class="so-label">E-posta ile Gönder<span class="so-desc">Mail uygulaması açılır</span></span>
+      </button>
+      <button class="share-option" onclick="doShareNative()" id="nativeShareBtn" style="display:none">
+        <span class="so-icon">↗</span>
+        <span class="so-label">Paylaş…<span class="so-desc">Sistem paylaşım menüsü (mobil)</span></span>
+      </button>
+      <div class="share-divider"></div>
+      <button class="share-option" onclick="doShareCopy()">
+        <span class="so-icon">⎘</span>
+        <span class="so-label">Panoya Kopyala<span class="so-desc">JSON metnini kopyala</span></span>
+      </button>
+    </div>
+
+    <div class="import-drop" id="importDrop" onclick="triggerImportFile()">
+      <div class="imp-icon">⬆</div>
+      <p>JSON Dosyası Yükle</p>
+      <p style="font-size:0.6rem;margin-top:0.3rem;opacity:0.5">Tıkla veya sürükle-bırak</p>
+    </div>
+    <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="handleImportFile(event)" />
+    <div class="import-result" id="importResult"></div>
+
+    <div class="share-footer">
+      <span style="font-size:0.6rem;color:#444;letter-spacing:0.08em">İçe aktarma mevcut kartlara eklenir</span>
+      <button class="btn btn-cancel" onclick="closeShareModal()">Kapat</button>
+    </div>
+  </div>
+</div>
+
 <!-- DETAIL OVERLAY -->
 <div class="detail-overlay" id="detailOverlay" onclick="handleDetailOverlayClick(event)">
   <div class="detail-box">
