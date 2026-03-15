@@ -83,6 +83,7 @@
   .drag-handle:active { cursor: grabbing; }
   .drag-handle span { display: block; width: 13px; height: 1.5px; background: var(--text-muted); border-radius: 1px; transition: background 0.2s; }
   .card-wrapper:hover .drag-handle { opacity: 1; }
+  @media (hover: none) { .drag-handle { opacity: 0.5; } }
   .drag-handle:hover span { background: var(--accent); }
   .card-wrapper.dragging { opacity: 0.25; transform: scale(0.96); }
   .card-wrapper.drag-over .card-front, .card-wrapper.drag-over .card-back { border-color: var(--accent); }
